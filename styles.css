@@ -1,0 +1,88 @@
+/* main styling for the page */
+body {
+    font-family: Arial, sans-serif; /* sets the default font */
+    text-align: center; /* centers all text */
+    background-color: #222; /* dark background by default */
+    color: white; /* makes text white for contrast */
+    transition: background-color 0.5s, color 0.5s; /* smooth color changes */
+}
+
+/* container that holds all the content */
+.container {
+    max-width: 600px; /* limits width for better layout */
+    margin: auto; /* centers the container */
+    background: rgba(0, 0, 0, 0.6); /* adds a slight dark overlay */
+    padding: 20px; /* adds space inside the container */
+    border-radius: 10px; /* rounds the edges */
+}
+
+/* styling for the assistant message box */
+.assistant-message {
+    font-size: 1.5em; /* makes text bigger */
+    margin-top: 20px; /* adds space above */
+    padding: 10px; /* adds space inside */
+    border-radius: 5px; /* rounds the edges */
+    background: rgba(255, 255, 255, 0.2); /* makes it slightly transparent */
+}
+
+/* general button styling */
+button {
+    background: transparent; /* removes solid fill */
+    border: 2px solid white; /* adds a white outline */
+    color: white; /* makes text white */
+    padding: 10px 15px; /* adds space inside the button */
+    font-size: 1rem; /* makes text readable */
+    border-radius: 5px; /* rounds the edges */
+    cursor: pointer; /* makes the cursor change on hover */
+    transition: 0.3s; /* adds smooth effect changes */
+}
+
+/* button hover effect */
+button:hover {
+    background: rgba(255, 255, 255, 0.2); /* adds a slight highlight */
+    transform: scale(1.05); /* slightly enlarges on hover */
+}
+
+/* input fields styling */
+input {
+    width: 80%; /* makes inputs responsive */
+    max-width: 250px; /* sets a max width */
+    padding: 10px; /* makes input fields easier to type in */
+    border-radius: 5px; /* rounds edges */
+    border: none; /* removes default border */
+    display: block; /* makes inputs appear as blocks */
+    margin: 10px auto; /* centers inputs */
+    text-align: center; /* centers text inside inputs */
+}
+
+/* effect for hero selection buttons */
+.hero-btn:hover {
+    transform: scale(1.1); /* slightly enlarges buttons when hovered */
+    background-color: white; /* changes background color */
+    color: black; /* makes text black for contrast */
+}
+
+/* makes sure background covers the whole screen */
+html, body {
+    height: 100vh; /* makes sure the background covers the full screen */
+    margin: 0; /* removes default margins */
+    padding: 0; /* removes default padding */
+    display: flex; /* makes the content flex-based */
+    justify-content: center; /* centers content horizontally */
+    align-items: center; /* centers content vertically */
+    background-size: cover; /* ensures the background fits */
+    background-position: center; /* centers the background image */
+    background-repeat: no-repeat; /* stops image from repeating */
+    background-attachment: fixed; /* makes the background stay fixed when scrolling */
+}
+
+/* styling for light mode */
+.light-mode {
+    background-color: white; /* switches background to white */
+    color: black; /* changes text to black for contrast */
+}
+
+/* light mode container styling */
+.light-mode .container {
+    background: rgba(255, 255, 255, 0.8); /* makes the container slightly transparent */
+}

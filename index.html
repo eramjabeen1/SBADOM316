@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero Virtual Assistant</title>
+    <link rel="stylesheet" href="styles.css"> <!-- links the css file for styling -->
+</head>
+<body>
+    <div class="container"> <!-- wraps everything for better layout -->
+        <h1>Superhero Virtual Assistant</h1> <!-- main title -->
+        <p>Select your assistant:</p> <!-- prompt for the user -->
+        <div class="buttons"> <!-- button container for hero selection -->
+            <button class="hero-btn" data-hero="ironman">Iron Man</button>
+            <button class="hero-btn" data-hero="joker">Joker</button>
+            <button class="hero-btn" data-hero="batman">Batman</button>
+            <button class="hero-btn" data-hero="spiderman">Spider-Man</button>
+        </div>
+        
+        <div class="assistant-message" id="assistant-message">
+            Select an assistant to begin... <!-- placeholder message -->
+        </div>
+
+        <h3>Task Manager</h3> <!-- section for adding tasks -->
+        <input type="text" id="task-input" placeholder="Enter a task" required>
+        <button id="add-task-btn">Add Task</button>
+        <ul id="task-list"></ul> <!-- tasks will be listed here -->
+
+        <h3>Set a Reminder</h3> <!-- section for setting reminders -->
+        <input type="text" id="reminder-text" placeholder="Enter reminder" required>
+        <input type="number" id="reminder-time" placeholder="Time in seconds" required>
+        <button id="set-reminder-btn">Set Reminder</button>
+        <p id="reminder-message"></p> <!-- displays reminder status -->
+
+        <h3>Superhero Trivia</h3> <!-- trivia section -->
+        <button id="trivia-btn">Tell me a fact</button>
+        <p id="trivia-message"></p> <!-- displays random superhero facts -->
+
+        <h3>Superhero Motivation</h3> <!-- motivational quotes section -->
+        <button id="motivate-btn">Motivate Me!</button>
+        <p id="motivation-message"></p> <!-- displays motivational quotes -->
+
+        <button id="toggle-theme">Toggle Dark/Light Mode</button> <!-- button to switch themes -->
+
+        <div class="hero-display"> <!-- section to display hero image -->
+            <img id="hero-image" src="" alt="Superhero" style="display: none;"> <!-- hides the image until a hero is selected -->
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- links the javascript file -->
+</body>
+</html>
