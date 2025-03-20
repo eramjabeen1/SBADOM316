@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     let currentAssistant = ''; // stores which superhero is selected
 
-    // getting references to different elements on the page
+    // setting default background for the main page
+    document.body.style.background = "url('https://i.etsystatic.com/23006761/r/il/d1347a/2807703306/il_1140xN.2807703306_k4x6.jpg') no-repeat center center fixed";
+    document.body.style.backgroundSize = "cover";
+
+    // references to different elements on the page
     const assistantMessage = document.getElementById('assistant-message');
     const heroButtons = document.querySelectorAll('.hero-btn');
     const taskInput = document.getElementById('task-input');
@@ -17,12 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const setReminderBtn = document.getElementById('set-reminder-btn');
     const reminderMessage = document.getElementById('reminder-message');
 
+
+    // function for text to speech .. will see if have time to adjust pitch to match batmans deep voice etc
+    function speak(text) {
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "en-US";
+        speech.rate = 1;
+        speech.pitch = 1;
+        window.speechSynthesis.speak(speech);
+    }
+
     // superhero messages when selected
     const messages = {
-        'ironman': "hello, i'm iron man. let's get things done like a genius!",
-        'joker': "why so serious? let's cause some chaos!",
-        'batman': "i'm batman. let's be strategic about this.",
-        'spiderman': "hey there! let's make this fun and get stuff done."
+        'ironman': "hello, im iron man. lets get things done like a genius! Jarvis has malfunctioned, but dont worry i still got this!",
+        'joker': "why so serious?! let's cause some chaos! get things done before harley brings her bat and squad, or i might just join them!",
+        'batman': "i'm batman, strategic plans are made in the shadows. if you choose to work alone, be ready. but if you work with me, stay sharp.",
+        'spiderman': "hey there! let's make this fun and get stuff done. you can always count on me! but if you slack Auntie May is gonna be upset!"
     };
 
     // superhero background images
@@ -34,10 +48,28 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // function to change the background when selecting a superhero
+    const heroSounds = {
+        'joker': new Audio('https://www.myinstants.com/media/sounds/joker-laugh.mp3')
+    };
+
     function chooseAssistant(hero) {
         currentAssistant = hero;
         document.body.style.background = `url('${heroImages[hero]}') no-repeat center center fixed`;
         document.body.style.backgroundSize = "cover";
+        speak(messages[hero]); // speak hero introduction
+
+        // HIDE the assistant message once a hero is selected
+        assistantMessage.style.display = "none";
+
+        // play sound maybe if i add later..
+        if (heroSounds[hero]) {
+            heroSounds[hero].play();
+        }
+
+        // spiderman animation 
+        if (hero === "spiderman") {
+            showHeroAnimation(hero);
+        }
     }
 
     // adding event listener to hero buttons
@@ -47,76 +79,97 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // task manager - adding tasks
+    // task manager
     addTaskBtn.addEventListener('click', function () {
         if (taskInput.value.trim() === '') {
-            alert('task cannot be empty!'); // prevents adding blank tasks
+            alert('Task cannot be empty!');
             return;
         }
         let taskItem = document.createElement('li');
         taskItem.textContent = taskInput.value;
-        let removeBtn = document.createElement('button'); // adds remove button
-        removeBtn.textContent = '💥'; // explosion emoji for delete button
+        let removeBtn = document.createElement('button');
+        removeBtn.textContent = '✔ Done';
         removeBtn.style.marginLeft = '10px';
-        removeBtn.addEventListener('click', () => taskItem.remove()); // removes task on click
+        removeBtn.addEventListener('click', () => taskItem.remove());
         taskItem.appendChild(removeBtn);
         taskList.appendChild(taskItem);
-        taskInput.value = ''; // clears input after adding task
+        speak(`Task added: ${taskInput.value}`);
+        taskInput.value = '';
     });
 
-    // set a reminder with a pop-up alert
+    // reminder with pop up alert 
     setReminderBtn.addEventListener('click', function () {
         if (reminderInput.value.trim() === '' || reminderTime.value.trim() === '') {
-            alert('please enter a reminder and time.'); // prevents empty reminders
+            alert('Please enter a reminder and time.');
             return;
         }
-        let time = parseInt(reminderTime.value) * 1000; // converts seconds to milliseconds
-        let message = `reminder: ${reminderInput.value}`;
-        reminderMessage.textContent = `reminder set for ${reminderTime.value} seconds...`;
+        let time = parseInt(reminderTime.value) * 1000;
+        let message = `Reminder: ${reminderInput.value}`;
+        reminderMessage.textContent = `Reminder set for ${reminderTime.value} seconds...`;
         setTimeout(() => {
             alert(message);
+            speak(message);
             reminderMessage.textContent = '';
         }, time);
     });
 
-    // superhero trivia - displays a random fact
+    // fun facts 
     triviaBtn.addEventListener('click', function () {
         if (!currentAssistant) {
-            alert("choose a superhero first!"); // makes sure a hero is selected first
+            alert("Choose a superhero first!");
             return;
         }
         let facts = {
-            'ironman': ["iron man built his first suit in a cave!", "tony stark has over 50 suits!", "iron man helped form the avengers."],
-            'joker': ["the joker has no definitive origin story!", "he was originally meant to be killed off early.", "the joker once ran for political office in comics."],
-            'batman': ["batman was trained by the league of shadows!", "his real name is bruce wayne.", "batman never kills his enemies."],
-            'spiderman': ["spider-man was created by stan lee and steve ditko!", "peter parker was bit by a radioactive spider.", "he made his first appearance in amazing fantasy #15."]
+            'ironman': ["Iron Man built his first suit in a cave!", "Tony Stark has over 50 suits!", "Iron Man helped form the Avengers."],
+            'joker': ["The Joker has no definitive origin story!", "He was originally meant to be killed off early.", "The Joker once ran for political office in comics."],
+            'batman': ["Batman was trained by the League of Shadows!", "His real name is Bruce Wayne.", "Batman never kills his enemies."],
+            'spiderman': ["Spider-Man was created by Stan Lee and Steve Ditko!", "Peter Parker was bitten by a radioactive spider.", "He made his first appearance in Amazing Fantasy #15."]
         };
         let randomFact = facts[currentAssistant][Math.floor(Math.random() * facts[currentAssistant].length)];
         triviaMessage.textContent = randomFact;
+        speak(randomFact);
     });
 
-    // motivational quotes for each hero
+    // superhero motivational quotes
     motivateBtn.addEventListener('click', function () {
         if (!currentAssistant) {
-            alert("choose a superhero first!"); // makes sure a hero is selected first
+            alert("Choose a superhero first!");
             return;
         }
         let quotes = {
-            'ironman': ["sometimes you gotta run before you can walk!", "heroes are made by the paths they choose, not the powers they are graced with.", "i am iron man."],
-            'joker': ["smile, because it confuses people.", "if you're good at something, never do it for free.", "introduce a little anarchy."],
-            'batman': ["it's not who i am underneath, but what i do that defines me.", "a hero can be anyone.", "i wear a mask. and that mask is not to hide who i am, but to create what i am."],
-            'spiderman': ["with great power comes great responsibility!", "no one can win every battle, but no man should fall without a struggle.", "sometimes we have to be steady and give up the things we want the most."]
+            'ironman': ["Heroes are made by the paths they choose, not the powers they are graced with.", "Sometimes you gotta run before you can walk."],
+            'joker': ["Smile, because it confuses people.", "Introduce a little anarchy."],
+            'batman': ["It's not who I am underneath, but what I do that defines me.", "The night is darkest just before the dawn."],
+            'spiderman': ["With great power comes great responsibility!", "No matter how hard you try, you will make mistakes. It’s the best way to learn."]
         };
+
         let randomQuote = quotes[currentAssistant][Math.floor(Math.random() * quotes[currentAssistant].length)];
         motivationMessage.textContent = randomQuote;
+        speak(randomQuote);
     });
 
-    // dark mode toggle button
+    // dark light mode toggle even tho it wasnt really needed 
     toggleThemeBtn.addEventListener('click', function () {
         document.body.classList.toggle('light-mode');
     });
 
-    // default background for main page
-    document.body.style.background = "url('https://i.etsystatic.com/23006761/r/il/d1347a/2807703306/il_1140xN.2807703306_k4x6.jpg') no-repeat center center fixed";
-    document.body.style.backgroundSize = "cover";
+    // spidey animation flying across screen
+    function showHeroAnimation(hero) {
+        if (hero !== "spiderman") return; // stops function if not spidey
+
+        let heroLogo = document.createElement("img");
+        heroLogo.src = 'https://pngfre.com/wp-content/uploads/spider-man-9-1.png';
+        heroLogo.style.position = "absolute";
+        heroLogo.style.height = "100px";
+        heroLogo.style.zIndex = "1000";
+        heroLogo.style.left = "-50px";
+        heroLogo.style.top = "10%";
+        heroLogo.style.animation = "swing 3s linear forwards";
+
+        document.body.appendChild(heroLogo);
+
+        setTimeout(() => {
+            document.body.removeChild(heroLogo);
+        }, 3000);
+    }
 });

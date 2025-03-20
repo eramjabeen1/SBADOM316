@@ -1,6 +1,6 @@
 /* main styling for the page */
 body {
-    font-family: Arial, sans-serif; /* sets the default font */
+    font-family: Bangers, cursive; /* sets the default font */
     text-align: center; /* centers all text */
     background-color: #222; /* dark background by default */
     color: white; /* makes text white for contrast */
@@ -43,7 +43,7 @@ button:hover {
     transform: scale(1.05); /* slightly enlarges on hover */
 }
 
-/* input fields styling */
+/* fields styling */
 input {
     width: 80%; /* makes inputs responsive */
     max-width: 250px; /* sets a max width */
@@ -62,7 +62,7 @@ input {
     color: black; /* makes text black for contrast */
 }
 
-/* makes sure background covers the whole screen */
+/* background covering the whole screen */
 html, body {
     height: 100vh; /* makes sure the background covers the full screen */
     margin: 0; /* removes default margins */
@@ -82,7 +82,56 @@ html, body {
     color: black; /* changes text to black for contrast */
 }
 
-/* light mode container styling */
+/* light mode container */
 .light-mode .container {
     background: rgba(255, 255, 255, 0.8); /* makes the container slightly transparent */
 }
+
+/* transistions */
+
+body {
+    transition: background 1s ease-in-out;
+}
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* making taskbars shake */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+
+/* superheroes movements across the page */
+@keyframes fly {
+    from { left: -100px; opacity: 1; }
+    to { left: 100vw; opacity: 0; }
+}
+
+@keyframes swing {
+    0% { left: -50px; top: 10%; }
+    25% { left: 25vw; top: 30%; }
+    50% { left: 50vw; top: 10%; }
+    75% { left: 75vw; top: 30%; }
+    100% { left: 100vw; top: 10%; opacity: 0; }
+}
+
+@keyframes bounce {
+    0% { top: -50px; opacity: 1; }
+    25% { top: 30%; }
+    50% { top: 10%; }
+    75% { top: 40%; }
+    100% { top: 70%; opacity: 0; }
+}
+
+@keyframes glide {
+    from { top: -100px; opacity: 1; }
+    to { top: 80vh; opacity: 0; }
+}
+
+
